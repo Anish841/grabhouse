@@ -2,9 +2,18 @@
 function callJavascriptFunction(list, routeIndices){
     console.log(list.length);
     console.log(routeIndices.length);
+    //routeIndices.sort();
+    var points=[];
+    points[0]=''; // Add the source later
+    for(var i=0; i< routeIndices.length ;i++)
+    {
+    	console.log(list[i].details.location.name);
+    	points[i+1]=list[i].details.location.name;
+    }
+    //pass addresses[] array
 }
 
-var routeIndices=[]
+var routeIndices=[];
 
 function toggleArrayItem(v) {
     var i = routeIndices.indexOf(v);
@@ -24,6 +33,10 @@ setTimeout(function(){
         toggleArrayItem(index);
         console.log(routeIndices);
         console.log('route updated');
+        /*for(var i=0; i< routeIndices.length ;i++)
+        {
+        	console.log(houselist[i].details.location.name);
+        }*/
         event.preventDefault();
         event.stopPropagation();
         event.stopImmediatePropagation();
