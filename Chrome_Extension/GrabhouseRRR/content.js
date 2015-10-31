@@ -2,6 +2,8 @@
 function callJavascriptFunction(list, routeIndices){
     console.log(list.length);
     console.log(routeIndices.length);
+    if(routeIndices.length ==0 )
+    	return;
     //routeIndices.sort();
     var points=[];
     points[0]=''; // Add the source later
@@ -10,8 +12,16 @@ function callJavascriptFunction(list, routeIndices){
     	console.log(list[i].details.location.name);
     	points[i+1]=list[i].details.location.name;
     }
-    //pass addresses[] array
-}
+ 
+    window.location.href="https://grabhousehunt.herokuapp.com/getroute?points="+points;
+/*    $.ajax({
+    	   type: "POST",
+    	   data: {points:points},
+    	   url: "https://grabhousehunt.herokuapp.com/getroute",
+    	   success: function(msg){
+    	   }
+    	});
+*/}
 
 var routeIndices=[];
 
@@ -22,9 +32,9 @@ function toggleArrayItem(v) {
     else
         routeIndices.splice(i,1);
 }
-
+var passToJS;
 setTimeout(function(){
-    var passToJS = function(){
+    passToJS = function(){
         callJavascriptFunction(houselist,routeIndices);
     };
 
@@ -41,7 +51,14 @@ setTimeout(function(){
         event.stopPropagation();
         event.stopImmediatePropagation();
     };
-
+    
+    var addSubmit=document.getElementsByClassName('nav nav-tabs');
+    console.log(addSubmit[1]);
+    var li = document.createElement("li");
+    li.appendChild(document.createTextNode("Route Plan"));
+    li.onclick=passToJS;
+    addSubmit[1].appendChild(li);
+    
     var cusid_ele = document.getElementsByClassName('action-block');
     //alert(cusid_ele.length)
     for (var i = 0; i < cusid_ele.length; ++i) {
