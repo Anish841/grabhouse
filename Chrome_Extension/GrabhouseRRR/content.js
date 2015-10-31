@@ -3,14 +3,16 @@ function callJavascriptFunction(list, routeIndices){
     console.log(list.length);
     console.log(routeIndices.length);
     if(routeIndices.length ==0 )
+    {
+    	alert('Select atlease one house');
     	return;
-    //routeIndices.sort();
-    var points=[];
-    points[0]=''; // Add the source later
+    }
+    
+    var points='';
     for(var i=0; i< routeIndices.length ;i++)
     {
     	console.log(list[i].details.location.name);
-    	points[i+1]=list[i].details.location.name;
+    	points+=list[i].details.location.geocode.lat+','+list[i].details.location.geocode.lon+";;;";
     }
  
     window.location.href="https://grabhousehunt.herokuapp.com/getroute?points="+points;
