@@ -3,6 +3,7 @@ function callJavascriptFunction(){
 	alert("this is call")
 }
 
+alert("hello");
 var continueExecution = function(){
 var cusid_ele = document.getElementsByClassName('action-block');
  //alert(cusid_ele.length)

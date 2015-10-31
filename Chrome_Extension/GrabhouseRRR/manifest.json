@@ -1,13 +1,13 @@
 {
-    "name": "Grab House",
+    "name": "Grabhouse RRR",
     "version": "0.0.1",
     "manifest_version": 2,
     "browser_action": {
-        "default_title": "Grab House",
+        "default_title": "Grabhouse:RRR",
         "default_popup": "popup.html"
     },
 	"content_scripts": [{
-        "matches": ["https://grabhouse.com/seeker/*"],
+        "matches": ["*://grabhouse.com/seeker/*"],
         "js": ["content.js"]
     }]
 }
