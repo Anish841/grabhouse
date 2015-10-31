@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Enter Constraints</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	  <link rel="stylesheet" href="./css/bootstrap.css">
+	  <link rel="stylesheet" href="./css/bootstrap.min.css">
+	<script  type='text/javascript' src='./js/jquery-2.1.4.min.js'></script>
+	<script  type='text/javascript' src='./js/bootstrap.min.js'></script>
+</head>
+<body>
+   <div class="panel panel-primary" id="address_panel">       
+	    <div class="panel-heading">
+	    	<h4 align="center">Please Enter Your Constraints Below ...</h4>
+	    </div>
+	    <div class="panel-body" align="center">
+	    	<div class="row">
+		    	<form class="col-md-12 form-inline" action="" >
+				  <div class="form-group">
+				    <label for="source">Source address:</label>
+				    <input type="text" class="form-control" id="source">
+				  </div>
+				  <button type="submit" class="btn btn-primary">Submit</button>
+				</form>
+			</div>
+			
+			<hr/>
+			
+			<div class="row">
+				<label class="col-md-12"> </label>
+			</div>
+			
+			<form id="constraints" action="/filter" method="get">
+			<div class="container">
+				<div class="row">
+					<label class="col-md-4" style="text-align:right;"><i class="fa fa-bus">Bus stop (<) </i>  </label>
+					<label class="col-md-1"> : </label>
+					<select id="busstop" class="col-md-5 input-small form-control" style="width:20%;">
+							<option value="-">-</option>				
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2" style="text-align:left;"> kms </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4"  style="text-align:right;"><i class="fa fa-bed">Restaurants (<)  </i> </label>
+					<label class="col-md-1"> : </label>
+					<select id="restaurnats"  class="col-md-5 input-small form-control" style="width:20%;">
+							<option value="-">-</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2" style="text-align:left;"> kms </label>
+				</div>
+
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4" style="text-align:right;"> <i class="fa fa-hospital-o">Hospitals (<)</i>  </label>
+					<label class="col-md-1"> : </label>
+					<select id="hospitals"  class="col-md-5 input-small form-control" style="width:20%;">
+							<option value="-">-</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2" style="text-align:left;"> kms </label>
+				</div>
+
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4"  style="text-align:right;"> <i class="fa fa-medkit">Pharmacies (<)</i>  </label>
+					<label class="col-md-1"> : </label>
+					<select id="pharmacies"  class="col-md-5 input-small form-control" style="width:20%;">
+							<option value="-">-</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2" style="text-align:left;"> kms </label>
+				</div>
+
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4"  style="text-align:right;"> <i class="fa fa-university">Schools (<)</i>  </label>
+					<label class="col-md-1"> : </label>
+					<select id="schools"  class="col-md-5 input-small form-control" style="width:20%;">
+							<option value="-">-</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2" style="text-align:left;"> kms </label>
+				</div>
+
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4" style="text-align:right;"><i class="fa fa-building"> Shopping Malls (<)</i>  </label>
+					<label class="col-md-1"> : </label>
+					<select id="shoppingmalls"  class="col-md-5 input-small form-control" style="width:20%;">
+							<option value="-">-</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2" style="text-align:left;"> kms </label>
+				</div>
+
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4" style="text-align:right;"> <i class="fa fa-cc-visa">ATM's (<)</i>  </label>
+					<label class="col-md-1"> : </label>
+					<select id="atm"  class="col-md-5 input-small form-control" style="width:20%;">
+							<option value="-">-</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2" style="text-align:left;"> kms </label>
+				</div>
+
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4" style="text-align:right;"> <i class="fa fa-tree">Gardens (<)</i>  </label>
+					<label class="col-md-1"> : </label>
+					<select id="gardens"  class="col-md-5 input-small form-control" style="width:20%;">
+							<option value="-">-</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2"  style="text-align:left;"> kms </label>
+				</div>
+
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4"  style="text-align:right;"> <i class="fa fa-file-video-o">Movie Theaters (<)</i>  </label>
+					<label class="col-md-1"> : </label>
+					<select id="movietheaters"  class="col-md-5 input-small form-control" style="width:20%;">
+							<option value="-">-</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2"  style="text-align:left;"> kms </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				 <div class="row">
+			    		<input type="submit" value="Submit" class="col-md-offset-5 col-md-2 btn btn-primary " onclick="validate()" />			    	
+			    </div>
+			</div>
+		</form>
+		</div>
+	</div>
+</body>
+</html>
