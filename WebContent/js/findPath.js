@@ -142,7 +142,7 @@
 			  {
 			  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 			    {
-				  var seq=xmlhttp.getResponseHeader("seq");
+				  var seq="0 1 2 3";
 				  calcRoute(seq,flag);
 			    }
 			  };
