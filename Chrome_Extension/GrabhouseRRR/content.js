@@ -12,15 +12,16 @@ function callJavascriptFunction(list, routeIndices){
     	console.log(list[i].details.location.name);
     	points[i+1]=list[i].details.location.name;
     }
-    
-    $.ajax({
+ 
+    window.location.href="https://grabhousehunt.herokuapp.com/getroute?points="+points;
+/*    $.ajax({
     	   type: "POST",
     	   data: {points:points},
     	   url: "https://grabhousehunt.herokuapp.com/getroute",
     	   success: function(msg){
     	   }
     	});
-}
+*/}
 
 var routeIndices=[];
 
