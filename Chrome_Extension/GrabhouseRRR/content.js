@@ -1,7 +1,7 @@
 
 function callJavascriptFunction(list, routeIndices){
-    console.log(list.length)
-    console.log(routeIndices.length)
+    console.log(list.length);
+    console.log(routeIndices.length);
 }
 
 var routeIndices=[]
@@ -16,18 +16,18 @@ function toggleArrayItem(v) {
 
 setTimeout(function(){
     var passToJS = function(){
-        callJavascriptFunction(houselist);
-    }
+        callJavascriptFunction(houselist,routeIndices);
+    };
 
     var toggleAdd = function(){
         index=$($(this).parentsUntil("div .list-block-inner")[5]).index();
         toggleArrayItem(index);
-        console.log(routeIndices)
-        console.log('route updated')
+        console.log(routeIndices);
+        console.log('route updated');
         event.preventDefault();
         event.stopPropagation();
-        event.stopImmediatePropagation(); 
-    }
+        event.stopImmediatePropagation();
+    };
 
     var cusid_ele = document.getElementsByClassName('action-block');
     //alert(cusid_ele.length)
@@ -67,11 +67,12 @@ setTimeout(function(){
         }
     
         houselist=e.detail.listings
+        console.log(houselist);
         console.log(e.detail.listings.length);
     });
 
     //var listings = window.angular.element('[ng-controller=listBlkCtrl]').scope().listings
     //alert(listings.len)
 
-},  10000)
+},  10000);
 
