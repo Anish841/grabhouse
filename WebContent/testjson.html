@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Place searches</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	  <link rel="stylesheet" href="./css/bootstrap.css">
+	  <link rel="stylesheet" href="./css/bootstrap.min.css">
+	<script  type='text/javascript' src='./js/jquery-2.1.4.min.js'></script>
+	<script  type='text/javascript' src='./js/bootstrap.min.js'></script>
+    <script>
+var map;
+var infowindow;
+var flag=0;
+var ans=0;
+var lat=[]
+var lon=[]
+var url="file:///C:/Users/Anish/Documents/grabhouse-master/WebContent/testjson.html?"
+var afterurl="";
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+function checkMap(lat,lon,type,rad){
+	//var self=this;
+  var pyrmont = {lat: lat, lng: lon};
+	flag=0;
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: pyrmont,
+    zoom: 15
+  });
+	
+  infowindow = new google.maps.InfoWindow();
+
+  var service = new google.maps.places.PlacesService(map);
+  return service.nearbySearch({
+    location: pyrmont,
+    radius: rad,
+    types: [type]
+  }, callback)
+}
+
+function callback(results, status) {
+  if (status === google.maps.places.PlacesServiceStatus.OK) {
+	//alert("inside 2nd");
+	ans++;
+	for (var i = 0; i < results.length; i++) {
+      createMarker(results[i]);
+	   if(results.length>=1){
+		flag=1;
+	}else
+		flag=0;
+    }
+  }
+ // createMarker(results[0]);
+}
+
+function createMarker(place) {
+  var placeLoc = place.geometry.location;
+  var marker = new google.maps.Marker({
+    map: map,
+    position: place.geometry.location
+  });
+
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.setContent(place.name);
+    infowindow.open(map, this);
+  });
+}
+
+
+var ansfinal="";
+var anstarget=new Array();
+function checkpar(){
+	// var type=['bus','atm']	//,'','','','','','',''
+	// var query_string = {};
+	// var query = window.location.search.substring(1);
+	// alert(query)
+	// var vars = query.split("=");
+	// vars=vars[1];
+	// vars=vars.split("---");
+	//   for (var i=0;i<vars.length;i++) {
+	// 	 var latlon=vars[i].split(",");
+	// 	 lat[i]=parseFloat(latlon[0]);
+	// 	 lon[i]=parseFloat(latlon[1]);
+	//   } 
+	  
+	// var rad=[2000,10000]
+	// //var lat=[12.857646653051,12.8313847]
+	// //var lon=[77.676754103844,77.7004931]
+	
+	var query_string = {};
+	var query = window.location.search.substring(1);
+
+	var vars = query.split("&");
+	if(vars.length>=2){
+		afterurl=vars[1]
+	}	
+	var type=new Array()
+	var rad=new Array();
+	for(var i=0;i<vars.length;i++){
+		var parname=vars[i].split("=");
+		var pname=parname[0];
+		var pval=parname[1];
+		if(pname=='points'){
+			pval=pval.split("---");
+			for (var j=0;j<pval.length;j++) {
+				 var latlon=pval[j].split(",");
+				 lat[j]=parseFloat(latlon[0]);
+				 lon[j]=parseFloat(latlon[1]);
+	  		} 
+		}
+		if(pname=='bus'){
+			document.getElementById('bus').value =pval;
+			type.push("bus");
+			rad.push(pval*1000);
+		}
+		if(pname=='Restaurants'){
+			document.getElementById('Restaurants').value =pval;
+			type.push("Restaurants");
+			rad.push(pval*1000);
+		}
+		if(pname=='Hospital'){
+			document.getElementById('Hospital').value =pval;
+			type.push("Hospital");
+			rad.push(pval*1000);
+		}
+		if(pname=='Pharmacies'){
+			document.getElementById('Pharmacies').value =pval;
+			type.push("Pharmacies");
+			rad.push(pval*1000);
+		}
+		if(pname=='Schools'){
+			document.getElementById('Schools').value =pval;
+			type.push("Schools");
+			rad.push(pval*1000);
+		}
+		if(pname=='Shopping Malls'){
+			document.getElementById('Shopping Malls').value =pval;
+			type.push("Shopping Malls");
+			rad.push(pval*1000);
+		}
+		if(pname=='ATM'){
+			document.getElementById('ATM').value =pval;
+			type.push("ATM");
+			rad.push(pval*1000);
+		}
+		if(pname=='Gardens'){
+			document.getElementById('Gardens').value =pval;
+			type.push("Gardens");
+			rad.push(pval*1000);
+		}
+		if(pname=='movie theaters'){
+			document.getElementById('movie theaters').value =pval;
+			type.push("movie theaters");
+			rad.push(pval*1000);
+		}
+	}
+
+	if(type.length<=0){
+		type=['bus','Restaurants','Hospital','Pharmacies','Schools','Shopping Malls','ATM','Gardens','movie theaters']
+	}
+	if(rad.length<=0){
+		rad=[5000,5000,5000,5000,5000,5000,5000,5000,5000]
+	}
+
+	var result=new Array(lat.length);
+	var res;
+	var resCount=new Array(lat.length);
+	
+	for(var i=0;i<lat.length;i++){
+		resCount[i]=0;
+		result[i]=new Array(type.length);
+		for(var j=0;j<type.length;j++){
+			//setTimeout(function(){
+				var tick=function(i,j){
+					return function(){
+
+				checkMap(lat[i],lon[i],type[j],rad[j]);
+				//alert("inside callback");
+				if(flag==1){
+					//alert("flag1")
+					resCount[i]++;
+				}
+				result[i][j]=flag;
+			//},2000);
+			}
+				};
+				setTimeout(tick(i,j),2000)
+		}
+		var tflag=1;
+		for(var j=0;j<type.length;j++){
+			if(result[i][j]==0){
+				tflag=0;
+				break;
+			}
+		}
+		
+		if(tflag){
+				anstarget.push(lat[i]);
+				anstarget.push(lon[i]);
+				//ansfinal=(lat[i]+","+lon[i]);
+				 if(ansfinal==""){
+					ansfinal=(lat[i]+","+lon[i]);
+				}else{
+					ansfinal+=("---"+lat[i]+","+lon[i])
+			}
+		}	
+	}
+	//alert(resCount);
+	// if(ansfinal.length==0){
+	// 	ansfinal.push(lat[i]);
+	// 	ansfinal.push(lon[i]);
+	// 	// if(ansfinal==""){
+	// 	// 		ansfinal=(lat[i]+","+lon[i]);
+	// 	// 	}else{
+	// 	// 		ansfinal+=("---"+lat[i]+","+lon[i])
+	// 	// 	}
+	// }
+	alert("ans==>"+ansfinal);
+	//alert(ans);
+	//return 0;
+}
+
+function refine(val,type){	
+	url+=("points="+ansfinal);		
+
+	//url+=("&"+type+"="+val);
+
+	var type="";
+
+	type=document.getElementById("bus").value;
+	if(type!="-"){
+		url+=("&"+"bus"+"="+type);
+	}
+	type=document.getElementById("Restaurants").value;
+	if(type!="-"){
+		url+=("&"+"Restaurants"+"="+type);
+	}
+	type=document.getElementById("Hospital").value;
+	if(type!="-"){
+		url+=("&"+"Hospital"+"="+type);
+	}
+	type=document.getElementById("Pharmacies").value;
+	if(type!="-"){
+		url+=("&"+"Pharmacies"+"="+type);
+	}
+	type=document.getElementById("Schools").value;
+	if(type!="-"){
+		url+=("&"+"Schools"+"="+type);
+	}
+	type=document.getElementById("Shopping Malls").value;
+	if(type!="-"){
+		url+=("&"+"Shopping Malls"+"="+type);
+	}
+	type=document.getElementById("ATM").value;
+	if(type!="-"){
+		url+=("&"+"ATM"+"="+type);
+	}
+	type=document.getElementById("Gardens").value;
+	if(type!="-"){
+		url+=("&"+"Gardens"+"="+type);
+	}
+	type=document.getElementById("movie theaters").value;
+	if(type!="-"){
+		url+=("&"+"movie theaters"+"="+type);
+	}
+
+	alert(url);
+	window.location.href=url;
+}
+
+    </script>
+  </head>
+  <body>
+		  <div id="map" style="width:30%;float:left"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTgidusdYIA_44NPMETrCM5ZsE2Ufjyvo&signed_in=true&libraries=places&callback=checkpar" async defer></script>
+  
+	<div class="panel panel-primary" id="address_panel" style="float:left;width:65%; margin-left:10px;">       
+	    <div class="panel-heading">
+	    	<h4 align="center">Please Enter Your Constraints Below ...</h4>
+	    </div>
+	    <div class="panel-body" align="center">
+	    	<div class="row">
+		    	<form class="col-md-12 form-inline" action="" >
+				  <div class="form-group">
+				    <label for="source">Source address:</label>
+				    <input type="text" class="form-control" id="source">
+				  </div>
+				  <button type="submit" class="btn btn-primary">Submit</button>
+				</form>
+			</div>
+				
+			<hr/>
+			
+			<div class="row">
+				<label class="col-md-12"> </label>
+			</div>
+			
+			<form id="constraints" action="/filter" method="get">
+			<div class="container">
+				<div class="row">
+					<label class="col-md-4" style="text-align:right;"><i class="fa fa-bus">Bus stop (<) </i>  </label>
+					<label class="col-md-1"> : </label>
+					<select id="bus" class="col-md-5 input-small form-control" style="width:20%;" onchange="refine(this.value,'bus')">
+							<option value="-">-</option>				
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2" style="text-align:left;"> kms </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4"  style="text-align:right;"><i class="fa fa-bed">Restaurants (<)  </i> </label>
+					<label class="col-md-1"> : </label>
+					<select id="Restaurants"  class="col-md-5 input-small form-control" style="width:20%;" onchange="refine(this.value,'Restaurants')">
+							<option value="-">-</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2" style="text-align:left;"> kms </label>
+				</div>
+
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4" style="text-align:right;"> <i class="fa fa-hospital-o">Hospitals (<)</i>  </label>
+					<label class="col-md-1"> : </label>
+					<select id="Hospital"  class="col-md-5 input-small form-control" style="width:20%;" onchange="refine(this.value,'Hospital')">
+							<option value="-">-</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2" style="text-align:left;"> kms </label>
+				</div>
+
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4"  style="text-align:right;"> <i class="fa fa-medkit">Pharmacies (<)</i>  </label>
+					<label class="col-md-1"> : </label>
+					<select id="Pharmacies"  class="col-md-5 input-small form-control" style="width:20%;" onchange="refine(this.value,'Pharmacies')">
+							<option value="-">-</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2" style="text-align:left;"> kms </label>
+				</div>
+
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4"  style="text-align:right;"> <i class="fa fa-university">Schools (<)</i>  </label>
+					<label class="col-md-1"> : </label>
+					<select id="Schools"  class="col-md-5 input-small form-control" style="width:20%;" onchange="refine(this.value,'Schools')">
+							<option value="-">-</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2" style="text-align:left;"> kms </label>
+				</div>
+
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4" style="text-align:right;"><i class="fa fa-building"> Shopping Malls (<)</i>  </label>
+					<label class="col-md-1"> : </label>
+					<select id="Shopping Malls"  class="col-md-5 input-small form-control" style="width:20%;" onchange="refine(this.value,'Shopping Malls')">
+							<option value="-">-</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2" style="text-align:left;"> kms </label>
+				</div>
+
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4" style="text-align:right;"> <i class="fa fa-cc-visa">ATM's (<)</i>  </label>
+					<label class="col-md-1"> : </label>
+					<select id="ATM"  class="col-md-5 input-small form-control" style="width:20%;" onchange="refine(this.value,'ATM')">
+							<option value="-">-</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2" style="text-align:left;"> kms </label>
+				</div>
+
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4" style="text-align:right;"> <i class="fa fa-tree">Gardens (<)</i>  </label>
+					<label class="col-md-1"> : </label>
+					<select id="Gardens"  class="col-md-5 input-small form-control" style="width:20%;" onchange="refine(this.value,'Gardens')">
+							<option value="-">-</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2"  style="text-align:left;"> kms </label>
+				</div>
+
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-4"  style="text-align:right;"> <i class="fa fa-file-video-o">Movie Theaters (<)</i>  </label>
+					<label class="col-md-1"> : </label>
+					<select id="movie theaters"  class="col-md-5 input-small form-control" style="width:20%;" onchange="refine(this.value,'movie theaters')">
+							<option value="-">-</option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>				
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>				
+							<option value="9">9</option>
+							<option value="10">10</option>
+					</select>
+					<label class="col-md-2"  style="text-align:left;"> kms </label>
+				</div>
+				
+				<div class="row">
+					<label class="col-md-12"> </label>
+				</div>
+				
+				<!-- <div class="row">
+			    		<input type="submit" value="Submit" class="col-md-offset-5 col-md-2 btn btn-primary " onclick="validate()" />			    	
+			    </div>-->
+			</div>
+		</form>
+		</div>
+	</div>
+	<div class="container">
+	<div class="row">
+		<label class="col-md-12"> Distance Based Optimal Tour </label>
+	</div>
+	<!--<div class="row">-->
+	
+	<!--</div>-->
+</div>
+<br /><br />
+<div class="container">
+	<div class="row">
+		<label class="col-md-12"> Time Based Optimal Tour </label>
+	</div>
+	<div class="row">
+		<div id="timepathMap" style="width:500px;height:380px;" class="col-md-6"></div>
+		<div id="timepathdetails" class="col-md-6"></div>
+	</div>
+</div>
+<br /><br />
+<div class="container">
+	<div class="row">
+		<label class="col-md-12"> Speed Based Optimal Tour </label>
+	</div>
+	<div class="row">
+		<div id="speedpathMap" style="width:500px;height:380px;" class="col-md-6"></div>
+		<div id="speedpathdetails" class="col-md-6"></div>
+	</div>
+</div>
+<br /><br />
+<div class="container">
+	<div class="row">
+		<label class="col-md-12"> Locations </label>
+	</div>
+	<div class="row">
+		<div id="googleMap" style="width:500px;height:380px;" class="col-md-6"></div>
+		<div id="outputDiv" class="col-md-6"></div>
+	</div>
+</div>
+   </body>
+</html>
