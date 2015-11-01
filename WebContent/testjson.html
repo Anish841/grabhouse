@@ -28,14 +28,6 @@ var lat=[]
 var lon=[]
 var url="file:///C:/Users/Anish/Documents/grabhouse-master/WebContent/testjson.html?"
 var afterurl="";
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}
 function checkMap(lat,lon,type,rad){
 	//var self=this;
   var pyrmont = {lat: lat, lng: lon};

@@ -1,0 +1,80 @@
+#timepathdetails{
+    max-height: 380px;
+    overflow-y:scroll
+}
+
+      html, body {
+        height: 100%;
+        font-family: 'Raleway', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+      #locationField, #controls {
+        position: relative;
+        width: 480px;
+      }
+      #autocomplete {        
+        width: 30%;
+        display: inline-block;
+      }
+      .label {
+        text-align: right;
+        font-weight: bold;
+        width: 100px;
+        color: #303030;
+      }
+      #address {
+        border: 1px solid #000090;
+        background-color: #f0f0ff;
+        width: 480px;
+        padding-right: 2px;
+      }
+      #address td {
+        font-size: 10pt;
+      }
+      .field {
+        width: 99%;
+      }
+      .slimField {
+        width: 80px;
+      }
+      .wideField {
+        width: 200px;
+      }
+      #locationField {
+        height: 20px;
+        margin-bottom: 2px;
+	}
+	
+	#footer {
+   position:fixed;
+   left:0px;
+   text-align: center;
+   bottom:0px;
+   height:20px;
+   width:100%;
+   background:#337ab7;
+    color: #ffffff;
+ font-family: 'Raleway', sans-serif;
+ font-size: 12px;
+}
+
+#init-loc{
+padding-right: 10px;
+}
+/* IE 6 */
+* html #footer {
+   position:absolute;
+   top:expression((0-(footer.offsetHeight)+(document.documentElement.clientHeight ? document.documentElement.clientHeight : document.body.clientHeight)+(ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop))+'px');
+}
+
+.pink{
+color: #ff69b4;
+}
+
+.fa{
+margin-right: 5px;
+}

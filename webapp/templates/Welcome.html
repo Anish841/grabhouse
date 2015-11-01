@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tour Optimizer</title>
+<style type="text/css">
+* {
+  .border-radius(0) !important;
+}
+
+#field {
+    margin-bottom:20px;
+}
+</style>
+	  <link rel="stylesheet" href="./static/css/bootstrap.css">
+	  <link rel="stylesheet" href="./static/css/bootstrap.min.css">
+	<script  type='text/javascript' src='./static/js/jquery-1.10.2.js'></script>
+	<script  type='text/javascript' src='./static/js/bootstrap.min.js'></script>
+	<script src="http://maps.googleapis.com/maps/api/js"></script>
+    <script  type='text/javascript' src='./static/js/findPath.js'></script>
+    <script>    	
+	    $(document).ready(function(){
+	        var next = 1;
+	        $(".add-more").click(function(e){
+	            e.preventDefault();
+	            var addto = "#field" + next;
+	            var addRemove = "#field" + (next);
+	            next = next + 1;
+	            var newIn = '<input class="input form-control col-md-6" id="field' + next + '" name="field' + next + '" type="text" placeholder="Enter Destination Address">';
+	            var newInput = $(newIn);
+	            var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" >Remove</button></div><div id="field">';
+	            var removeButton = $(removeBtn);
+	            $(addto).after(newInput);
+	            $(addRemove).after(removeButton);
+	            $("#field" + next).attr('data-source',$(addto).attr('data-source'));
+	            $("#count").val(next);  
+	            
+	                $('.remove-me').click(function(e){
+	                    e.preventDefault();
+	                    var fieldNum = this.id.charAt(this.id.length-1);
+	                    var fieldID = "#field" + fieldNum;
+	                    $(this).remove();
+	                    $(fieldID).remove();
+	                });
+	        });	        
+	    });
+	    
+	    function validate()
+	    {
+	    	{
+	    		alert("Only Maximum of nine destinations are allowed");
+	    		return;
+	    	}
+	    	dispath='', timepath='',speedpath='';
+	    	geocoder=new google.maps.Geocoder();;
+			bounds = new google.maps.LatLngBounds();
+			markersArray = [];
+	    	//travelmode=document.getElementById("travelmode").value;
+    		getAddress();
+	    }
+    </script>
+</head>
+<body>
+<div>
+   <div class="panel panel-primary" id="address_panel">       
+	    <div class="panel-body" align="center">
+		    <div class="container">
+			    <div class="row">
+			    	<div class="col-md-4"><label> </label></div>
+			    	<input type="button" value="Find Paths" class="btn btn-primary " onclick="validate()">
+			    	<div class="col-md-4"><label> </label></div>
+			    </div>
+			</div>
+	   </div>
+  </div>
+</div>
+<div class="container">
+	<div class="row">
+		<label class="col-md-12"> Distance Based Optimal Tour </label>
+	</div>
+	<div class="row">
+		<div id="distancepathMap" style="width:500px;height:380px;" class="col-md-6"></div>
+		<div id="distancepathdetails" class="col-md-6"></div>
+	</div>
+</div>
+<br /><br />
+<div class="container">
+	<div class="row">
+		<label class="col-md-12"> Time Based Optimal Tour </label>
+	</div>
+	<div class="row">
+		<div id="timepathMap" style="width:500px;height:380px;" class="col-md-6"></div>
+		<div id="timepathdetails" class="col-md-6"></div>
+	</div>
+</div>
+<br /><br />
+<div class="container">
+	<div class="row">
+		<label class="col-md-12"> Speed Based Optimal Tour </label>
+	</div>
+	<div class="row">
+		<div id="speedpathMap" style="width:500px;height:380px;" class="col-md-6"></div>
+		<div id="speedpathdetails" class="col-md-6"></div>
+	</div>
+</div>
+<br /><br />
+<div class="container">
+	<div class="row">
+		<label class="col-md-12"> Locations </label>
+	</div>
+	<div class="row">
+		<div id="googleMap" style="width:500px;height:380px;" class="col-md-6"></div>
+		<div id="outputDiv" class="col-md-6"></div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<label>Developed by <font color="red">Pavan Kumar R R </font> , MTech IIIT-B <br/>Contact: pavan13515@gmail.com <br/>Phone: 9916635510</label>
+		</div>
+	</div>
+</div>
+</body>
+</html>
