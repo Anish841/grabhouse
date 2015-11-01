@@ -40,8 +40,14 @@ setTimeout(function(){
         callJavascriptFunction(houselist,routeIndices);
     };
 
+    var css = document.createElement("style");
+    css.type = "text/css";
+    css.innerHTML = '.fa-cab:before, .fa-taxi:before {content: "\uf1ba" !important;}';
+    document.body.appendChild(css);
+    
     var toggleAdd = function(){
         index=$($(this).parentsUntil("div .list-block-inner")[5]).index();
+        $(this).parent().toggleClass('active');
         toggleArrayItem(index);
         console.log(routeIndices);
         console.log('route updated');
