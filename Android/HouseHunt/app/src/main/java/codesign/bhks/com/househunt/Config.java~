@@ -5,6 +5,6 @@ package codesign.bhks.com.househunt;
  */
 public class Config {
 
-    public static final String URL_HOME = "https://grabhousehunt.herokuapp.com/getroute";
+    public static final String URL_HOME = "http://www.google.com/";
 
 }
